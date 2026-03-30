@@ -1,45 +1,113 @@
+package com.example.techcorp;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project{
+public class Project {
+
     private String name;
     private int requiredWork;
     private int progress;
-    private List<Employee> team;
+    // Zmiana z List<Employee> na List<Workable> 
+    private List<Workable> team; 
+    private ProjectStatus status;
 
-    public Project(String name, int requiredWork){
-        this.name=name;
-        this.requiredWork=requiredWork;
-        this.progress=0;
-        this.team=new ArrayList<>();
+    public Project(String name, int requiredWork) {
+        this.name = name;
+        this.requiredWork = requiredWork;
+        this.progress = 0;
+        this.team = new ArrayList<>();
+        this.status = ProjectStatus.PLANNED;
     }
-    public void addEmployee(Employee employee){
+    public void addWorker(Workable workable) {
+        if (workable == null) {
+            throw new IllegalArgumentException("Worker cannot be null.");
+        }
+        team.add(workable); 
+    }
+
+
+    public void addEmployee(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("Employee cannot be null.");
+        }
         team.add(employee);
     }
-   
+
+    public void start() {
+        if (status == ProjectStatus.PLANNED) {
+            status = ProjectStatus.IN_PROGRESS;
+            System.out.println("THE STATUS HAS BEEN CHANGED");
+        }
+    }
+
+    public void cancel() {
+        if (status != ProjectStatus.FINISHED) {
+            status = ProjectStatus.CANCELLED;
+            System.out.println("THE STATUS HAS BEEN CHANGED");
+        }
+    }
+    public void putOnHold(){
+        if (status != ProjectStatus.FINISHED){
+            status=ProjectStatus.ON_HOLD;
+            System.out.println("THE STATUS HAS BEEN CHANGED");
+        }
+    }
+    public void resume(){
+        if (status == ProjectStatus.ON_HOLD){
+            status=ProjectStatus.IN_PROGRESS;
+            System.out.println("THE STATUS HAS BEEN CHANGED");
+        }
+    }
 
     public void workOneTurn() {
-        for (Employee employee : team) {
-            progress += employee.work();
+        if (status != ProjectStatus.IN_PROGRESS) {
+            return;
         }
 
-        if (progress > requiredWork) {
+        for (Workable workable : team) {
+            progress += workable.work();
+        }
+
+        if (progress >= requiredWork) {
             progress = requiredWork;
+            status = ProjectStatus.FINISHED;
         }
     }
-    public boolean isFinished(){
-        return progress>=requiredWork;
+
+    public boolean isFinished() {
+        return status == ProjectStatus.FINISHED;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public int getRequiredWork(){
+
+    public int getRequiredWork() {
         return requiredWork;
     }
-    public int getProgress(){
+
+    public int getProgress() {
         return progress;
     }
-    public List<Employee> getTeam(){
+
+    public List<Workable> getTeam() {
         return team;
+    }
+
+    public ProjectStatus getStatus() {
+        return status;
+    }
+
+    private void validateName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Project name cannot be null or blank.");
+        }
+    }
+
+    private void validateRequiredWork(int requiredWork) {
+        if (requiredWork <= 0) {
+            throw new IllegalArgumentException("Required work must be greater than 0.");
+        }
     }
 }

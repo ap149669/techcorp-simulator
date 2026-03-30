@@ -1,5 +1,6 @@
-public class Employee {
+package com.example.techcorp;
 
+public abstract class Employee implements Workable {
     private String name;
     private int skill;
     private double salary;
@@ -9,6 +10,8 @@ public class Employee {
         this.skill = skill;
         this.salary = salary;
     }
+    
+
 
     public int work() {
         return skill;

@@ -1,0 +1,21 @@
+Różnica między Employee a Workable
+Główna różnica polega na tym, że bycie pracownikiem (Employee) określa tożsamość 
+danej osoby w firmie, natomiast bycie Workable opisuje jedynie konkretną 
+umiejętność. Kiedy mówimy o Employee, mamy na myśli człowieka, który posiada 
+nazwisko, konkretny poziom umiejętności i otrzymuje wypłatę za swoją obecność 
+w strukturach przedsiębiorstwa. Z kolei interfejs Workable to rodzaj kontraktu,
+który mówi nam tylko tyle, że dany obiekt potrafi wykonać pracę, czyli posiada 
+metodę work(). W praktyce oznacza to, że każdy pracownik jest zdolny do pracy, 
+ale nie każda rzecz zdolna do pracy – jak na przykład automatyczne narzędzie czy 
+bot – musi być od razu pełnoprawnym pracownikiem z listą płac.
+
+Dlaczego Project powinien zależeć od Workable?
+Opieranie klasy Project na interfejsie Workable zamiast na konkretnej klasie 
+Employee sprawia, że cały system staje się znacznie bardziej elastyczny i 
+nowoczesny. Dzięki takiemu podejściu projekt nie musi już „wiedzieć”, 
+czy zadanie wykonuje człowiek, czy maszyna, ponieważ interesuje go wyłącznie to, 
+czy dany obiekt spełnia kontrakt i potrafi dostarczyć wynik pracy. Jest to ogromna 
+zaleta, ponieważ w przyszłości możemy dodawać do zespołu nowe elementy, takie jak 
+automatyczne skrypty czy boty, bez konieczności zmieniania jakiegokolwiek kodu w 
+samej klasie projektu. Takie projektowanie pozwala nam skupić się na samym 
+procesie tworzenia wartości, a nie na pilnowaniu sztywnych podziałów kadrowych.
